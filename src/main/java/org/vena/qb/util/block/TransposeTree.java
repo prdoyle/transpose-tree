@@ -5,9 +5,10 @@ import java.util.ArrayDeque;
 import java.util.BitSet;
 import java.util.ConcurrentModificationException;
 import java.util.PrimitiveIterator;
+import java.util.Spliterators;
 import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
-import org.vena.qb.util.Qutil;
 import org.vena.qb.util.block.PrimitiveBlock.ValueBeyondLimitException;
 
 /**
@@ -276,11 +277,11 @@ public abstract class TransposeTree {
 	}
 
 	protected IntStream allIndexes() {
-		return Qutil.stream(new Walker(i->0));
+		return StreamSupport.intStream(Spliterators.spliteratorUnknownSize(new Walker(i->0), 0), false);
 	}
 	
 	protected IntStream allIndexesMatching(NodeLocator locator) {
-		return Qutil.stream(new Walker(locator));
+		return StreamSupport.intStream(Spliterators.spliteratorUnknownSize(new Walker(locator), 0), false);
 	}
 
 	private class Walker implements PrimitiveIterator.OfInt {
